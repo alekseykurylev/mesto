@@ -8,8 +8,8 @@
     padding: 0;
     cursor: pointer;
     transition: opacity .1s ease-in-out;
-    grid-column-start: 2;
-    grid-row-start: 1;
+    grid-row: 1;
+    grid-column: 2;
 }
 
 .profile__button-edit:hover {

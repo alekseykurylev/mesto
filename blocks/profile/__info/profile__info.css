@@ -1,8 +1,7 @@
 .profile__info {
      display: grid;
      align-items: center;
-     
-     grid-template-columns: repeat(2, minmax(auto, max-content));
+     grid-template-columns: minmax(auto, max-content);
      gap: 15px 10px;
 
 }
