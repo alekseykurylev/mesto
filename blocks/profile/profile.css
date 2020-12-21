@@ -1,0 +1,22 @@
+.profile {
+    max-width: 880px;
+    margin: auto;
+    padding: 42px 20px 0 20px;
+}
+
+@media (max-width: 767px) {
+    .profile {
+        text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .profile {
+        padding-left: 30px;
+        padding-right: 30px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 120px 1fr 150px;
+        gap: 30px;
+    }
+}
