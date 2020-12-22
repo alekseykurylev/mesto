@@ -5,13 +5,21 @@
     transform: translate(0, -100%);
     background-image: url("../../../images/close.svg");
     background-size: cover;
+    background-color: transparent;
     width: 20px;
     height: 20px;
     cursor: pointer;
     transition: opacity .1s ease-in-out;
+    border: 0;
+    padding: 0;
 }
 .popup__close:hover {
     opacity: .6;
+}
+.popup__close:active,
+.popup__close:focus {
+    border-color: #000;
+    outline: none;
 }
 @media (min-width: 768px) {
     .popup__close {
