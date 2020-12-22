@@ -4,11 +4,9 @@
     font-size: 14px;
     line-height: 1.2;
     width: 100%;
-    padding: 0;
-    height: 35px;
+    padding: 13px 0;
     transition: .2s ease-in-out;
     transition-property: border;
-
 }
 
 .popup__input:not(:first-child) {
