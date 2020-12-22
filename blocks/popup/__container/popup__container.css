@@ -12,6 +12,6 @@
 }
 @media (min-width: 768px) {
     .popup__container {
-        padding: 35px;
+        padding: 34px 36px 37px 36px;
     }
 }
