@@ -1,4 +1,4 @@
-.places__like {
+.place__like {
     width: 20px;
     height: 18px;
     background-image: url('../../../images/like.svg');
@@ -9,14 +9,14 @@
     padding: 0;
     border: 0;
 }
-.places__like:hover {
+.place__like:hover {
     opacity: .5;
 }
-.places__like:active {
+.place__like:active {
     background-image: url('../../../images/like-active.svg');
 }
-.places__like:active,
-.places__like:focus {
+.place__like:active,
+.place__like:focus {
     border-color: #000;
     outline: none;
 }
