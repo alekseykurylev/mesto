@@ -7,7 +7,7 @@ let jobInput = formElement.querySelector('.job-input')
 let nameProfile = document.querySelector('.profile__name')
 let jobProfile = document.querySelector('.profile__job')
 
-function togglePopup() {
+function toggleOpenPopup() {
     popup.classList.toggle('popup_opened')
     if(popup.classList.contains('popup_opened')) {
         nameInput.value = nameProfile.textContent
@@ -15,8 +15,9 @@ function togglePopup() {
     }
 }
 
-editProfile.addEventListener('click', togglePopup)
-closePopup.addEventListener('click', togglePopup)
+function toggleClosePopup() {
+    popup.classList.toggle('popup_opened')
+}
 
 function handleFormSubmit(evt) {
     evt.preventDefault();
@@ -24,9 +25,11 @@ function handleFormSubmit(evt) {
     nameProfile.textContent = nameInput.value
     jobProfile.textContent = jobInput.value
 
-    togglePopup()
+    toggleClosePopup()
 
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
+editProfile.addEventListener('click', toggleOpenPopup)
+closePopup.addEventListener('click', toggleClosePopup)
+formElement.addEventListener('submit', handleFormSubmit)
 
