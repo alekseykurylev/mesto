@@ -19,9 +19,7 @@ function removePopup() {
     popup.classList.remove('popup_opened')
 }
 
-function handleFormSubmit(
-    
-) {
+function handleFormSubmit(evt) {
     evt.preventDefault();
     
     nameProfile.textContent = nameInput.value
