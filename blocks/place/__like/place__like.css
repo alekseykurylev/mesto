@@ -1,7 +1,7 @@
 .place__like {
     width: 20px;
     height: 18px;
-    background-image: url('../../../images/like.svg');
+    background-image: url("../../../images/like.svg");
     background-size: cover;
     background-color: transparent;
     cursor: pointer;
@@ -9,11 +9,11 @@
     padding: 0;
     border: 0;
 }
-.place__like:hover {
+.place__like:not(:active):hover {
     opacity: .5;
 }
 .place__like:active {
-    background-image: url('../../../images/like-active.svg');
+    background-image: url("../../../images/like-active.svg");
 }
 .place__like:active,
 .place__like:focus {
