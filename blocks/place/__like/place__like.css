@@ -9,12 +9,10 @@
     padding: 0;
     border: 0;
 }
-.place__like:not(:active):hover {
+.place__like:not(.place__like_active):hover {
     opacity: .5;
 }
-.place__like:active {
-    background-image: url("../../../images/like-active.svg");
-}
+
 .place__like:active,
 .place__like:focus {
     border-color: #000;

@@ -21,11 +21,15 @@
     border-color: #000;
     outline: none;
 }
-@media (min-width: 768px) {
+@media (min-width: 568px) {
     .popup__close {
         top: -5px;
         right: -5px;
         transform: translate(100%, -100%);
+    }
+}
+@media (min-width: 768px) {
+    .popup__close {
         width: 30px;
         height: 30px;
     }
