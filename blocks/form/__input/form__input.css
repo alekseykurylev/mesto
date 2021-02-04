@@ -1,4 +1,4 @@
-.popup__input {
+.form__input {
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     font-size: 14px;
@@ -9,12 +9,12 @@
     transition-property: border;
 }
 
-.popup__input:not(:first-child) {
-    margin-top: 30px;
+.form__input:active,
+.form__input:focus {
+    outline: none;
 }
 
-.popup__input:active,
-.popup__input:focus {
+.form__input:active:not(.form__input_type_error),
+.form__input:focus:not(.form__input_type_error) {
     border-color: #000;
-    outline: none;
 }

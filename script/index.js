@@ -31,22 +31,22 @@ const initialCards = [
     },
 ]
 const nameProfile = document.querySelector(".profile__name")
-const jobProfile = document.querySelector(".profile__job")
+const aboutProfile = document.querySelector(".profile__about")
 
 const popup = document.querySelectorAll(".popup")
 const popupСloseButton = document.querySelectorAll(".popup__close")
 
 const editProfile = document.querySelector(".profile__button-edit")
 const popupEdit = document.querySelector(".popup_type_edit")
-const formEditProfile = popupEdit.querySelector(".popup__form")
-const nameInput = formEditProfile.querySelector("#input_name")
-const jobInput = formEditProfile.querySelector("#input_job")
+const formEditProfile = popupEdit.querySelector(".form")
+const nameInput = formEditProfile.querySelector("#name-input")
+const aboutInput = formEditProfile.querySelector("#about-input")
 
 const placeButtonAdd = document.querySelector(".profile__button-add")
 const popupNewCard = document.querySelector(".popup_type_new-card")
-const formNewCard = popupNewCard.querySelector(".popup__form")
-const placeInput = formNewCard.querySelector("#input_place")
-const imgInput = formNewCard.querySelector("#input_img")
+const formNewCard = popupNewCard.querySelector(".form")
+const placeInput = formNewCard.querySelector("#place-input")
+const imgInput = formNewCard.querySelector("#img-input")
 
 const popupImage = document.querySelector(".popup_type_image")
 const image = document.querySelector(".popup__image")
@@ -55,7 +55,7 @@ const figcaption = document.querySelector(".popup__figcaption")
 const placesList = document.querySelector(".places__list")
 const cardTemplate = document.querySelector(".card_template").content
 
-//Карточки из масива при загрузки страницы
+//Карточки из масива при загрузке страницы
 function renderItemsStart() {
     initialCards.forEach((item) => {
         renderItem(item.name, item.link)
@@ -90,18 +90,7 @@ function handleDeletePlace(evt) {
     })
 }
 
-//Открытие и закрытие модалки
-function openPopup(evt) {
-    evt.classList.add("popup_opened")
-}
-
-//Закрытие модалки
-function closePopup(evt) {
-    evt.target.closest(".popup").classList.remove("popup_opened")
-}
-
-
-//Модалка картинки
+//Открываем изображение в модалке
 function handlePopupPlaceImage(evt) {
     const titile = evt.querySelector(".place__title")
     evt.querySelector(".place__img").addEventListener("click", function (evt) {
@@ -112,38 +101,66 @@ function handlePopupPlaceImage(evt) {
     })
 }
 
-//Модальное окно профиля
+//Открываем модалку "Редактирования профиля"
 function handlePopupEditOpen() {
     openPopup(popupEdit)
-    if (popupEdit.classList.contains("popup_opened")) {
-        nameInput.value = nameProfile.textContent
-        jobInput.value = jobProfile.textContent
-    }
+    nameInput.value = nameProfile.textContent
+    aboutInput.value = aboutProfile.textContent
+    formEditProfile.addEventListener("submit", handlePopupEditSubmit)
 }
+
+//Меняем имя и описание профиля
 function handlePopupEditSubmit(evt) {
     evt.preventDefault()
     nameProfile.textContent = nameInput.value
-    jobProfile.textContent = jobInput.value
-    closePopup(evt)
+    aboutProfile.textContent = aboutInput.value
+    closePopup(popupEdit)
+    formEditProfile.removeEventListener("submit", handlePopupEditSubmit)
 }
 
-//Модальное окно новое место
+//Открываем модалку "Новое место"
 function handlePopupNewCardOpen() {
     openPopup(popupNewCard)
     formNewCard.reset()
+    formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
 }
+
+//Добавляем карточку нового места
 function handlePopupNewCardSubmit(evt) {
     evt.preventDefault()
     renderItem(placeInput.value, imgInput.value)
-    closePopup(evt)
+    closePopup(popupNewCard)
+    formNewCard.removeEventListener("submit", handlePopupNewCardSubmit)
 }
 
-editProfile.addEventListener("click", handlePopupEditOpen)
-formEditProfile.addEventListener("submit", handlePopupEditSubmit)
+//Закрытие модалки
+function closePopup(evt) {
+    evt.classList.remove("popup_opened")
+    document.removeEventListener('keydown', handleEscUp)
+}
 
-placeButtonAdd.addEventListener("click", handlePopupNewCardOpen)
-formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
+//Закрытие модалки на Esc
+function handleEscUp(evt) {
+    const activePopup = document.querySelector('.popup_opened')
+    if (evt.key === 'Escape') {
+        closePopup(activePopup)
+    }
+}
 
-popupСloseButton.forEach((item) => {
-    item.addEventListener("click", closePopup)
+popup.forEach((item) => {
+    item.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
+            closePopup(item)
+        }
+    })
 })
+
+//Открытие модалки
+function openPopup(evt) {
+    evt.classList.add("popup_opened")
+    document.addEventListener('keydown', handleEscUp)
+}
+
+
+editProfile.addEventListener("click", handlePopupEditOpen)
+placeButtonAdd.addEventListener("click", handlePopupNewCardOpen)
