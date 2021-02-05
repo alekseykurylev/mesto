@@ -33,7 +33,7 @@ const initialCards = [
 const nameProfile = document.querySelector(".profile__name")
 const aboutProfile = document.querySelector(".profile__about")
 
-const popup = document.querySelectorAll(".popup")
+const popups = document.querySelectorAll(".popup")
 const popupСloseButton = document.querySelectorAll(".popup__close")
 
 const editProfile = document.querySelector(".profile__button-edit")
@@ -65,38 +65,46 @@ renderItemsStart()
 
 //Рендер карточки
 function renderItem(name, link) {
-    const htmlElement = cardTemplate.cloneNode(true)
-    htmlElement.querySelector(".place__title").textContent = name
-    htmlElement.querySelector(".place__img").src = link
-    htmlElement.querySelector(".place__img").alt = name
-
-    handleLikePlace(htmlElement)
-    handleDeletePlace(htmlElement)
-    handlePopupPlaceImage(htmlElement)
+    const htmlElement = createCard(name, link)
     placesList.prepend(htmlElement)
 }
 
+//Создание карточки
+function createCard(name, link) {
+    const cardElement = cardTemplate.cloneNode(true)
+    cardElement.querySelector(".place__title").textContent = name
+    cardElement.querySelector(".place__img").src = link
+    cardElement.querySelector(".place__img").alt = name
+
+    handleLikePlace(cardElement)
+    handleDeletePlace(cardElement)
+    handlePopupPlaceImage(cardElement, name, link)
+
+    return cardElement
+}
+
+  
+
 //Лайк карточки
 function handleLikePlace(evt) {
-    evt.querySelector(".place__like").addEventListener("click", function (evt) {
+    evt.querySelector(".place__like").addEventListener("click", (evt) => {
         evt.target.classList.toggle("place__like_active")
     })
 }
 
 //Удаление карточки
 function handleDeletePlace(evt) {
-    evt.querySelector(".place__delete").addEventListener("click", function (evt) {
+    evt.querySelector(".place__delete").addEventListener("click", (evt) => {
         evt.target.closest(".place").remove()
     })
 }
 
 //Открываем изображение в модалке
-function handlePopupPlaceImage(evt) {
-    const titile = evt.querySelector(".place__title")
-    evt.querySelector(".place__img").addEventListener("click", function (evt) {
-        image.src = evt.target.src
-        image.alt = titile.textContent
-        figcaption.textContent = titile.textContent
+function handlePopupPlaceImage(cardElement, name, link) {
+    cardElement.querySelector(".place__img").addEventListener("click", () => {
+        image.src = link
+        image.alt = name
+        figcaption.textContent = name
         openPopup(popupImage)
     })
 }
@@ -106,7 +114,7 @@ function handlePopupEditOpen() {
     openPopup(popupEdit)
     nameInput.value = nameProfile.textContent
     aboutInput.value = aboutProfile.textContent
-    formEditProfile.addEventListener("submit", handlePopupEditSubmit)
+    
 }
 
 //Меняем имя и описание профиля
@@ -115,14 +123,14 @@ function handlePopupEditSubmit(evt) {
     nameProfile.textContent = nameInput.value
     aboutProfile.textContent = aboutInput.value
     closePopup(popupEdit)
-    formEditProfile.removeEventListener("submit", handlePopupEditSubmit)
+
 }
 
 //Открываем модалку "Новое место"
 function handlePopupNewCardOpen() {
     openPopup(popupNewCard)
     formNewCard.reset()
-    formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
+    
 }
 
 //Добавляем карточку нового места
@@ -130,12 +138,12 @@ function handlePopupNewCardSubmit(evt) {
     evt.preventDefault()
     renderItem(placeInput.value, imgInput.value)
     closePopup(popupNewCard)
-    formNewCard.removeEventListener("submit", handlePopupNewCardSubmit)
+
 }
 
 //Закрытие модалки
-function closePopup(evt) {
-    evt.classList.remove("popup_opened")
+function closePopup(popup) {
+    popup.classList.remove("popup_opened")
     document.removeEventListener('keydown', handleEscUp)
 }
 
@@ -147,7 +155,7 @@ function handleEscUp(evt) {
     }
 }
 
-popup.forEach((item) => {
+popups.forEach((item) => {
     item.addEventListener('click', (evt) => {
         if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
             closePopup(item)
@@ -156,11 +164,13 @@ popup.forEach((item) => {
 })
 
 //Открытие модалки
-function openPopup(evt) {
-    evt.classList.add("popup_opened")
+function openPopup(popup) {
+    popup.classList.add("popup_opened")
     document.addEventListener('keydown', handleEscUp)
 }
 
 
 editProfile.addEventListener("click", handlePopupEditOpen)
+formEditProfile.addEventListener("submit", handlePopupEditSubmit)
 placeButtonAdd.addEventListener("click", handlePopupNewCardOpen)
+formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
