@@ -147,7 +147,7 @@ formEditProfile.addEventListener("submit", handlePopupEditSubmit)
 placeButtonAdd.addEventListener("click", handlePopupNewCardOpen)
 formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
 
-
+export { popupCard, popupImage, popupFigcaption, openPopup, closePopup }
 
 // Решил попробовать сделать класс для попапа, но видо нужно изучить следующий спринт :)
 // class Popup {

@@ -1,3 +1,4 @@
+import { popupCard, popupImage, popupFigcaption, openPopup, closePopup } from './index.js'
 export default class Card {
     constructor(name, link, cardSelector) {
         this._title = name
