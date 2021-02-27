@@ -1,43 +1,10 @@
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
+import initialCards from './data.js'
+import { openPopup, closePopup } from './utils.js'
 
-const initialCards = [
-    {
-        name: "Архыз",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-        name: "Челябинская область",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-        name: "Иваново",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-        name: "Камчатка",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-        name: "Холмогорский район",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-        name: "Байкал",
-        link:
-            "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    },
-]
 const nameProfile = document.querySelector(".profile__name")
 const aboutProfile = document.querySelector(".profile__about")
-
-const popups = document.querySelectorAll(".popup")
-const popupСloseButton = document.querySelectorAll(".popup__close")
 
 const editProfile = document.querySelector(".profile__button-edit")
 const popupEdit = document.querySelector(".popup_type_edit")
@@ -51,32 +18,33 @@ const formNewCard = popupNewCard.querySelector(".form")
 const placeInput = formNewCard.querySelector("#place-input")
 const imgInput = formNewCard.querySelector("#img-input")
 
-const popupCard = document.querySelector(".popup_type_image")
-const popupImage = document.querySelector(".popup__image")
-const popupFigcaption = document.querySelector(".popup__figcaption")
+
 
 const placesList = document.querySelector(".places__list")
-const cardTemplate = document.querySelector(".card_template").content
+
+//Создание карточки
+const createCard = (name, link, cardSelector) => {
+    const card = new Card(name, link, cardSelector)
+    const cardElement = card.generateCard()
+    placesList.prepend(cardElement)
+}
 
 //Добавляем карточки на старте
 initialCards.forEach((item) => {
-    const card = new Card(item.name, item.link, '.card_template')
-    const cardElement = card.generateCard()
-    placesList.append(cardElement)
+    createCard(item.name, item.link, '.card_template')
 })
 
 //Открываем модалку "Новое место"
 function handlePopupNewCardOpen() {
     openPopup(popupNewCard)
     formNewCard.reset()
+    cardValidation()
 }
 
 //Добавляем карточку нового места
 function handlePopupNewCardSubmit(evt) {
     evt.preventDefault()
-    const card = new Card(placeInput.value, imgInput.value, '.card_template')
-    const cardElement = card.generateCard()
-    placesList.prepend(cardElement)
+    createCard(placeInput.value, imgInput.value, '.card_template')
     closePopup(popupNewCard)
 }
 
@@ -97,57 +65,37 @@ function handlePopupEditSubmit(evt) {
 
 }
 
-popups.forEach((item) => {
-    item.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-            closePopup(item)
-        }
-    })
-})
-
-//Открытие модалки
-function openPopup(popup) {
-    popup.classList.add("popup_opened")
-    document.addEventListener('keydown', handleEscUp)
-}
-
-//Закрытие модалки
-function closePopup(popup) {
-    popup.classList.remove("popup_opened")
-    document.removeEventListener('keydown', handleEscUp)
-}
-
-//Закрытие модалки на Esc
-function handleEscUp(evt) {
-    const activePopup = document.querySelector('.popup_opened')
-    if (evt.key === 'Escape') {
-        closePopup(activePopup)
-    }
-}
-
-
-const formSettings = (settings) => {
-    const formList = Array.from(document.querySelectorAll(settings.formSelector))
-    formList.forEach((formElement) => {
-        new FormValidator(settings, formElement).enableValidation()
-    })
-}
-
-formSettings({
+const formSetting = {
     formSelector: '.form',
     inputSelector: '.form__input',
     submitButtonSelector: '.form__submit',
     inactiveButtonClass: 'form__submit_inactive',
     inputErrorClass: 'form__input_type_error',
     errorClass: 'form__input-error_active'
-})
+}
+
+const editValidation = () => {
+    new FormValidator(formSetting, formEditProfile).enableValidation()
+}
+editValidation()
+
+const cardValidation = () => {
+    new FormValidator(formSetting, formNewCard).enableValidation()
+}
+cardValidation()
+
+
 
 editProfile.addEventListener("click", handlePopupEditOpen)
 formEditProfile.addEventListener("submit", handlePopupEditSubmit)
 placeButtonAdd.addEventListener("click", handlePopupNewCardOpen)
 formNewCard.addEventListener("submit", handlePopupNewCardSubmit)
 
-export { popupCard, popupImage, popupFigcaption, openPopup, closePopup }
+
+
+
+
+
 
 // Решил попробовать сделать класс для попапа, но видо нужно изучить следующий спринт :)
 // class Popup {

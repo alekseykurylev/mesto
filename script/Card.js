@@ -1,8 +1,8 @@
-import { popupCard, popupImage, popupFigcaption, openPopup, closePopup } from './index.js'
+import { popupCard, popupImage, popupFigcaption, openPopup, closePopup } from './utils.js'
 export default class Card {
     constructor(name, link, cardSelector) {
         this._title = name
-        this._img = link
+        this._imgLink = link
         this._cardSelector = cardSelector
     }
     _getTemplate() {
@@ -16,10 +16,11 @@ export default class Card {
     }
     generateCard() {
         this._element = this._getTemplate()
+        this._img = this._element.querySelector('.place__img')
         this._setEventListeners()
         this._element.querySelector('.place__title').textContent = this._title
-        this._element.querySelector('.place__img').src = this._img
-        this._element.querySelector('.place__img').alt = this._title
+        this._img.src = this._imgLink
+        this._img.alt = this._title
 
         return this._element
     }
@@ -28,9 +29,10 @@ export default class Card {
     }
     _handleRemove() {
         this._element.remove()
+        this._element = ''
     }
     _handleOpenPopup() {
-        popupImage.src = this._img
+        popupImage.src = this._imgLink
         popupImage.alt = this._title
         popupFigcaption.textContent = this._title
         openPopup(popupCard)
