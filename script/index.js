@@ -38,7 +38,7 @@ initialCards.forEach((item) => {
 function handlePopupNewCardOpen() {
     openPopup(popupNewCard)
     formNewCard.reset()
-    cardValidation()
+    cardFormValidator.toggleButtonState()
 }
 
 //Добавляем карточку нового места
@@ -74,16 +74,11 @@ const formSetting = {
     errorClass: 'form__input-error_active'
 }
 
-const editValidation = () => {
-    new FormValidator(formSetting, formEditProfile).enableValidation()
-}
-editValidation()
+const profileFormValidator = new FormValidator(formSetting, formEditProfile)
+profileFormValidator.enableValidation()
 
-const cardValidation = () => {
-    new FormValidator(formSetting, formNewCard).enableValidation()
-}
-cardValidation()
-
+const cardFormValidator = new FormValidator(formSetting, formNewCard)
+cardFormValidator.enableValidation()
 
 
 editProfile.addEventListener("click", handlePopupEditOpen)
