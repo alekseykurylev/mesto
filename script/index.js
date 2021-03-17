@@ -16,9 +16,6 @@ import {
   } from './utils.js';
 
 
-const profileFormValidator = new FormValidator(formSetting, formEditProfile)
-const cardFormValidator = new FormValidator(formSetting, formNewCard)
-
 
 
 const cardList = new Section({
@@ -47,12 +44,11 @@ const popupUserForm = new PopupWithForm('.popup_type_edit', {
         userInfo.setUserInfo(data)
     }
 })
+popupUserForm.setEventListeners()
 const handlePopupEditProfile = () => {
-    popupUserForm.setEventListeners()
     const userData = userInfo.getUserInfo()
     nameInput.value = userData.name
     aboutInput.value = userData.about
-    profileFormValidator.enableValidation()
     popupUserForm.open()
 }
 
@@ -69,11 +65,16 @@ const popupCardForm = new PopupWithForm('.popup_type_new-card', {
         cardList.addItem(cardElement)
     }
 })
+popupCardForm.setEventListeners()
 const handlePopupNewCard = () => {
-    popupCardForm.setEventListeners()
-    cardFormValidator.enableValidation()
     popupCardForm.open()
 }
+
+
+const profileFormValidator = new FormValidator(formSetting, formEditProfile)
+profileFormValidator.enableValidation()
+const cardFormValidator = new FormValidator(formSetting, formNewCard)
+cardFormValidator.enableValidation()
 
 
 placeButtonAdd.addEventListener("click", handlePopupNewCard)
