@@ -1,36 +1,17 @@
-const popups = document.querySelectorAll(".popup")
-const popupCard = document.querySelector(".popup_type_image")
-const popupImage = document.querySelector(".popup__image")
-const popupFigcaption = document.querySelector(".popup__figcaption")
-const esc = 'Escape'
+export const editProfile = document.querySelector(".profile__button-edit")
+export const placeButtonAdd = document.querySelector(".profile__button-add")
 
-popups.forEach((item) => {
-    item.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
-            closePopup(item)
-        }
-    })
-})
+export const formEditProfile = document.forms['edit-profile']
+export const nameInput = formEditProfile.elements.name
+export const aboutInput = formEditProfile.elements.about
 
-//Открытие модалки
-function openPopup(popup) {
-    popup.classList.add("popup_opened")
-    document.addEventListener('keydown', handleEscUp)
+export const formNewCard = document.forms['new-card']
+
+export const formSetting = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__submit',
+    inactiveButtonClass: 'form__submit_inactive',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__input-error_active'
 }
-
-//Закрытие модалки
-function closePopup(popup) {
-    popup.classList.remove("popup_opened")
-    document.removeEventListener('keydown', handleEscUp)
-}
-
-//Закрытие модалки на Esc
-function handleEscUp(evt) {
-    const activePopup = document.querySelector('.popup_opened')
-    if (evt.key === esc) {
-        closePopup(activePopup)
-    }
-}
-
-
-export { popupCard, popupImage, popupFigcaption, openPopup, closePopup }
