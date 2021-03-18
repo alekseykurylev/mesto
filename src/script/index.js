@@ -13,21 +13,24 @@ import {
     aboutInput,
     formNewCard,
     formSetting
-  } from './utils.js';
+} from './utils.js';
 
 
 
+const createCard = (name, link) => {
+    const card = new Card({
+        name: name, link: link,
+        handleCardClick: () => {
+            popupWithImage.open(name, link)
+        }
+    }, '.card_template')
+    return card.generateCard()
+}
 
 const cardList = new Section({
     items: initialCards,
     renderer: (data) => {
-        const card = new Card({
-            name: data.name, link: data.link,
-            handleCardClick: () => {
-                popupWithImage.open(data.name, data.link)
-            }
-        }, '.card_template')
-        const cardElement = card.generateCard()
+        const cardElement = createCard(data.name, data.link)
         cardList.addItem(cardElement)
     }
 }, '.places__list')
@@ -55,13 +58,7 @@ const handlePopupEditProfile = () => {
 
 const popupCardForm = new PopupWithForm('.popup_type_new-card', {
     formSubmit: (data) => {
-        const card = new Card({
-            name: data.place, link: data.img,
-            handleCardClick: () => {
-                popupWithImage.open(data.place, data.img)
-            }
-        }, '.card_template')
-        const cardElement = card.generateCard()
+        const cardElement = createCard(data.place, data.img)
         cardList.addItem(cardElement)
     }
 })
