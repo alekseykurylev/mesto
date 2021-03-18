@@ -5,9 +5,6 @@ export const formEditProfile = document.forms['edit-profile']
 export const nameInput = formEditProfile.elements.name
 export const aboutInput = formEditProfile.elements.about
 
-export const popupImage = document.querySelector('.popup__image')
-export const popupFigcaption = document.querySelector('.popup__figcaption')
-
 export const formNewCard = document.forms['new-card']
 
 export const formSetting = {
